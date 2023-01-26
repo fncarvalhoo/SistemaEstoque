@@ -7,13 +7,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.project.estoque.model.Product;
-import com.project.estoque.repository.ProdutoRepository;
+import com.project.estoque.repository.ProductRepository;
 
 @Service
 public class ProductService {
 
     @Autowired
-    private ProdutoRepository repository;
+    private ProductRepository repository;
 
     public List<Product> getAll() {
         return repository.findAll();

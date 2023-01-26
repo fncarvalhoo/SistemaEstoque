@@ -7,6 +7,6 @@ import com.project.estoque.model.Product;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 @Repository
-public interface ProdutoRepository extends JpaRepository<Product, Long> {
+public interface ProductRepository extends JpaRepository<Product, Long> {
 
 }
