@@ -1,10 +1,19 @@
 package com.project.estoque.model;
 
+import java.util.List;
+
 import javax.persistence.Column;
+import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
+@Entity
+@Table(name = "categories")
 public class Category {
 
     @Id
@@ -17,6 +26,18 @@ public class Category {
 
     @Column(nullable = false, length = 200)
     private String description;
+
+    @OneToMany(mappedBy = "category")
+    @JsonBackReference
+    private List<Product> product;
+
+    public List<Product> getProduct() {
+        return product;
+    }
+
+    public void setProduct(List<Product> product) {
+        this.product = product;
+    }
 
     public Long getId() {
         return id;

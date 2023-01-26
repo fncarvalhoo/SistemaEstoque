@@ -3,6 +3,7 @@ package com.project.estoque.dto;
 import java.util.Date;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.project.estoque.model.Category;
 
 public class ProductRequestDTO {
 
@@ -20,6 +21,16 @@ public class ProductRequestDTO {
     private Date registrationDate;
 
     private String description;
+
+    private Category category;
+
+    public Category getCategory() {
+        return category;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
+    }
 
     public Long getId() {
         return id;
