@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.project.estoque.dto.ProductRequestDTO;
 import com.project.estoque.dto.ProductResponseDTO;
-import com.project.estoque.model.Product;
 import com.project.estoque.service.ProductService;
 
 @RestController
