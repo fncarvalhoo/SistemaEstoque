@@ -1,41 +1,25 @@
-package com.project.estoque.model;
+package com.project.estoque.dto;
 
 import java.util.Date;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import com.fasterxml.jackson.annotation.JsonFormat;
 
-@Entity
-public class Product {
+public class ProductResponseDTO {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "product_id")
     private Long id;
 
-    @Column(nullable = false, length = 20)
     private String name;
 
-    @Column(nullable = false)
     private Double price;
 
-    @Column(nullable = false)
     private Integer quantity;
 
-    @Column(nullable = false)
     private Integer stdQuantity;
 
-    @Column(nullable = true)
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy", timezone = "GMT-3")
     private Date registrationDate;
 
-    @Column(nullable = false, length = 30)
     private String description;
-
-    public Product() {
-    }
 
     public Long getId() {
         return id;
@@ -92,6 +76,5 @@ public class Product {
     public void setDescription(String description) {
         this.description = description;
     }
-    
 
 }
