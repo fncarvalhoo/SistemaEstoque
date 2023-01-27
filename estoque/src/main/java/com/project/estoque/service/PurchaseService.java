@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.project.estoque.repository.PurchaseRepository;
+import com.project.estoque.service.Validations.PurchaseValidations;
 import com.project.estoque.dto.PurchaseRequestDTO;
 import com.project.estoque.dto.PurchaseResponseDTO;
 import com.project.estoque.model.Purchase;
@@ -21,6 +22,9 @@ public class PurchaseService {
 
     @Autowired
     private PurchaseRepository repository;
+
+    @Autowired
+    private PurchaseValidations validations;
 
     private ModelMapper mapper = new ModelMapper();
 
@@ -52,6 +56,10 @@ public class PurchaseService {
     }
 
     public PurchaseResponseDTO register(PurchaseRequestDTO purchase) {
+        validations.quantityValidate(purchase);
+        validations.statusValidate(purchase);
+        validations.providerValidate(purchase);
+        validations.expirationDateValidate(purchase);
         purchase.setPurchaseDate(new Date());
         Purchase purchaseModel = mapper.map(purchase, Purchase.class);
         purchaseModel.setId(null);
@@ -62,6 +70,13 @@ public class PurchaseService {
     }
 
     public PurchaseResponseDTO update(Long id, PurchaseRequestDTO purchase) {
+        validations.quantityValidate(purchase);
+        validations.statusValidate(purchase);
+        validations.providerValidate(purchase);
+        validations.expirationDateValidate(purchase);
+        validations.arrivalDateValidate(purchase);
+        purchase.setArrivalDate(new Date());
+        validations.arrivalDateValidate(purchase);
         Optional<PurchaseResponseDTO> previousPurchase = getById(id);
         Purchase purchaseModel = mapper.map(purchase, Purchase.class);
         purchaseModel.setId(id);
