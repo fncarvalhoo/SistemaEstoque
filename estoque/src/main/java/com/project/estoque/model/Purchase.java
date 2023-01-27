@@ -16,22 +16,22 @@ public class Purchase {
     @Column(name = "id_compra")
     private Long id;
 
-    @Column(name = "quantity", nullable = false)
+    @Column(nullable = false)
     private Integer quantity;
 
-    @Column(name = "status", nullable = false, length = 10)
+    @Column(nullable = false, length = 10)
     private String status;
 
-    @Column(name = "provider", nullable = false, length = 20)
+    @Column(nullable = false, length = 20)
     private String provider;
 
-    @Column(name = "purchase_date", nullable = false)
+    @Column(nullable = false)
     private Date purchaseDate;
 
-    @Column(name = "arrival_date")
+    @Column(nullable = true)
     private Date arrivalDate;
 
-    @Column(name = "expiration_date")
+    @Column(nullable = true)
     private Date expirationDate;
 
     public Long getId() {
