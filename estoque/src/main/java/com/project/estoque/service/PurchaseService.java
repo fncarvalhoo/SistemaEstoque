@@ -10,10 +10,13 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.project.estoque.repository.ProductRepository;
 import com.project.estoque.repository.PurchaseRepository;
 import com.project.estoque.service.Validations.PurchaseValidations;
+import com.project.estoque.dto.ProductResponseDTO;
 import com.project.estoque.dto.PurchaseRequestDTO;
 import com.project.estoque.dto.PurchaseResponseDTO;
+import com.project.estoque.model.Product;
 import com.project.estoque.model.Purchase;
 import com.project.estoque.model.exception.ResourceNotFoundException;
 
@@ -24,7 +27,12 @@ public class PurchaseService {
     private PurchaseRepository repository;
 
     @Autowired
-    private PurchaseValidations validations;
+    private ProductService productService;
+
+    @Autowired
+    private ProductRepository productRepository;
+
+    PurchaseValidations validations = new PurchaseValidations();
 
     private ModelMapper mapper = new ModelMapper();
 
@@ -60,6 +68,7 @@ public class PurchaseService {
         validations.statusValidate(purchase);
         validations.providerValidate(purchase);
         validations.expirationDateValidate(purchase);
+        validations.productValidate(purchase);
         purchase.setPurchaseDate(new Date());
         Purchase purchaseModel = mapper.map(purchase, Purchase.class);
         purchaseModel.setId(null);
@@ -75,6 +84,7 @@ public class PurchaseService {
         validations.providerValidate(purchase);
         validations.expirationDateValidate(purchase);
         validations.arrivalDateValidate(purchase);
+        validations.productValidate(purchase);
         purchase.setArrivalDate(new Date());
         validations.arrivalDateValidate(purchase);
         Optional<PurchaseResponseDTO> previousPurchase = getById(id);
@@ -89,6 +99,17 @@ public class PurchaseService {
     public void delete(Long id) {
         getById(id);
         repository.deleteById(id);
+    }
+
+    public void addQuantity(PurchaseRequestDTO purchase) {
+        var statusPurchase = purchase.getStatus();
+        if (statusPurchase.equals("Entregue")) {
+            var productId = purchase.getProduct().getId();
+            Optional<ProductResponseDTO> product = productService.getById(productId);
+            product.get().setQuantity(purchase.getQuantity() + product.get().getQuantity());
+            var productFinal = mapper.map(product.get(), Product.class);
+            productFinal = productRepository.save(productFinal);
+        }
     }
 
 }

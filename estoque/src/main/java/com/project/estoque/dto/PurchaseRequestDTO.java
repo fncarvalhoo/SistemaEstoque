@@ -3,6 +3,7 @@ package com.project.estoque.dto;
 import java.util.Date;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.project.estoque.model.Product;
 
 public class PurchaseRequestDTO {
 
@@ -21,6 +22,16 @@ public class PurchaseRequestDTO {
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy", timezone = "GMT-3")
     private Date expirationDate;
+
+    private Product product;
+
+    public Product getProduct() {
+        return product;
+    }
+
+    public void setProduct(Product product) {
+        this.product = product;
+    }
 
     public Long getId() {
         return id;

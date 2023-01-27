@@ -22,6 +22,16 @@ public class PurchaseResponseDTO {
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy", timezone = "GMT-3")
     private Date expirationDate;
 
+    private ProductRefinedResponseDTO product;
+
+    public ProductRefinedResponseDTO getProduct() {
+        return product;
+    }
+
+    public void setProduct(ProductRefinedResponseDTO product) {
+        this.product = product;
+    }
+
     public Long getId() {
         return id;
     }

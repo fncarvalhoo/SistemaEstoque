@@ -22,8 +22,7 @@ public class ProductService {
     @Autowired
     private ProductRepository repository;
 
-    @Autowired
-    private ProductValidations validations;
+    ProductValidations validations = new ProductValidations();
 
     private ModelMapper mapper = new ModelMapper();
 
@@ -38,8 +37,9 @@ public class ProductService {
         if (optProduct.isEmpty()) {
             throw new ResourceNotFoundException("Produto com id = " + id + " não encontrado");
         }
-        ProductResponseDTO productDTO = mapper.map(optProduct.get(), ProductResponseDTO.class);
-        return Optional.of(productDTO);
+        ProductResponseDTO dto = mapper.map(optProduct.get(), ProductResponseDTO.class);
+        return Optional.of(dto);
+
     }
 
     public List<ProductResponseDTO> getByQuantity(Integer quantity) {

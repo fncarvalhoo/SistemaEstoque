@@ -17,8 +17,7 @@ public class CategoryService {
     @Autowired
     private CategoryRepository repository;
 
-    @Autowired
-    private CategoryValidations validations;
+    CategoryValidations validations = new CategoryValidations();
 
     public List<Category> getAll() {
         return repository.findAll();

@@ -4,6 +4,8 @@ import java.util.Date;
 
 import com.project.estoque.dto.PurchaseRequestDTO;
 import com.project.estoque.model.exception.ResourceBadRequestException;
+import com.project.estoque.model.exception.ResourceNotFoundException;
+import com.project.estoque.service.ProductService;
 
 public class PurchaseValidations {
 
@@ -48,6 +50,16 @@ public class PurchaseValidations {
             throw new ResourceBadRequestException("O fornecedor deve ser informado");
         } else if (purchase.getStatus().length() > 10) {
             throw new ResourceBadRequestException("Tamanho máximo de 20 caracteres no fornecedor");
+        }
+    }
+
+    public void productValidate(PurchaseRequestDTO purchase) {
+        ProductService productService = new ProductService();
+        var productID = purchase.getProduct().getId();
+        if (productID == null || purchase.getProduct() == null) {
+            throw new ResourceBadRequestException("O produto deve ser informado");
+        } else if (productService.getById(productID) == null) {
+            throw new ResourceNotFoundException("O produto não existe");
         }
     }
 
